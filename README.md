@@ -69,4 +69,4 @@ Use this compiled driver to overwrite the original driver file. (Make a copy of 
 
 $ sudo cp -a ~/Downloads/xf86-input-evdev-2.10.5/src/.libs/evdev_drv.so /usr/lib/xorg/modules/input/evdev_drv.so
 
-When the driver is overwritten the X is reloaded automatically and you should see the new changes taking place right-away. This has been tested on Debian 8 version.
+When the driver is overwritten the X is reloaded automatically and you should see the new changes taking place right-away. This has been tested in Debian 8 version.
