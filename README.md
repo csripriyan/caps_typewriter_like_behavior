@@ -4,11 +4,11 @@ The objective of this blog is to demonstrate how to change the behavior of the c
 
 1. When Caps lock is pressed, Caps will be ON
 
-2. When Caps lock is pressed again, there will be no Change.
+2. When Caps lock is pressed again, there will be no Change; Caps remain ON.
 
-3. When either left or right Shift key, Caps is turned OFF.
+3. When either left or right Shift key is pressed, Caps is turned OFF.
 
-4. When any Shift key is pressed again, nothing happens. The Caps key remains OFF.
+4. When either of the Shift key is pressed again, there will be no Change; The Caps key remains OFF.
 
 Note: The Shift key's original functionality remains intact.
 
@@ -36,10 +36,9 @@ $ sudo apt install libmtdev-dev
 $ sudo apt install libudev-dev
 
 
-Now we are ready to compile the code. 
-Let's decompress, configure and apply the patch before compiling.
+Now we are ready to compile the code. Let's decompress, configure and apply the patch before compiling.
 
-Assuming the code package is in the Downloads folder, just change directory to ~/Downloads and extract,
+Assuming the code package is downloaded into the Downloads folder in the home directory, just change directory to ~/Downloads and extract,
 
 $ tar xvfz xserver-xorg-input-evdev_2.10.5.orig.tar.gz
 
@@ -56,9 +55,13 @@ $ make
 
 Assuming the patch file is available in the Downloads folder, issue the below command to apply the patch. 
 
+$ cd ~/Downloads/xf86-input-evdev-2.10.5/src
+
 $ patch -b < ~/Downloads/typewriter_caps_exact_windows_behavior.patch
 
 Now that the patch is applied; recompile the code again,
+
+$ cd ~/Downloads/xf86-input-evdev-2.10.5/
 
 $ make
 
