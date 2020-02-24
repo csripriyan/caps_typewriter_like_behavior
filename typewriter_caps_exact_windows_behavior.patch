@@ -1,0 +1,82 @@
+--- evdev.c	2019-11-26 11:43:01.463651552 -0500
++++ evdev.c.orig	2019-11-26 10:54:10.023642136 -0500
+@@ -56,15 +56,6 @@
+ #include <xserver-properties.h>
+ #include <mtdev-plumbing.h>
+ 
+-//#define EVDEV_DEBUG  //Uncomment this to enable debug prints..
+-
+-#ifdef EVDEV_DEBUG
+-    #include <syslog.h>
+-    #define    EVDEV_DBG_PRINT(f,...)    syslog(f,##__VA_ARGS__)
+-#else
+-    #define    EVDEV_DBG_PRINT(f,...)
+-#endif
+-
+ #ifndef XI_PROP_PRODUCT_ID
+ #define XI_PROP_PRODUCT_ID "Device Product ID"
+ #endif
+@@ -286,9 +277,6 @@
+ void
+ EvdevQueueKbdEvent(InputInfoPtr pInfo, struct input_event *ev, int value)
+ {
+-	static enum STATE {OFF, ON} capsKey;
+-	enum PRESS_STATE {CAPS_KEY_UP, CAPS_KEY_DOWN};
+-
+     int code = ev->code + MIN_KEYCODE;
+     EventQueuePtr pQueue;
+ 
+@@ -297,47 +285,12 @@
+     if (value == 2)
+         return;
+ 
+-	// simulating typewriter caps lock behavior
+-	if ((pQueue = EvdevNextInQueue(pInfo)))
+-	{
+-		if(ev->code == KEY_CAPSLOCK && value == 1) {  //CAPS Down
+-			EVDEV_DBG_PRINT (LOG_ERR, "[Amz] caps down\n");
+-			if(capsKey == OFF) {
+-				pQueue->type = EV_QUEUE_KEY;
+-				pQueue->detail.key = KEY_CAPSLOCK + MIN_KEYCODE;
+-				pQueue->val = CAPS_KEY_DOWN; //Simulate press
+-			}
+-		}
+-		else if(ev->code == KEY_CAPSLOCK && value == 0) { //CAPS Up
+-			EVDEV_DBG_PRINT (LOG_ERR, "[Amz] caps up\n");
+-			if(capsKey == OFF) {
+-				pQueue->type = EV_QUEUE_KEY;
+-				pQueue->detail.key = KEY_CAPSLOCK + MIN_KEYCODE;
+-				pQueue->val = CAPS_KEY_UP; //Simulate release
+-				capsKey = ON;
+-			}
+-		}
+-		else {
+-			EVDEV_DBG_PRINT (LOG_ERR, "[Amz] default | %d \n", capsKey);
+-			pQueue->type = EV_QUEUE_KEY;
+-			pQueue->detail.key = code;
+-			pQueue->val = value;
+-			if((ev->code == KEY_LEFTSHIFT || ev->code == KEY_RIGHTSHIFT) && value == 0 && capsKey == 1) { //Shift Up
+-				EVDEV_DBG_PRINT (LOG_ERR, "[Amz] default | handle shft up %d \n", capsKey);
+-				pQueue = EvdevNextInQueue(pInfo);
+-				pQueue->type = EV_QUEUE_KEY;
+-				pQueue->detail.key = KEY_CAPSLOCK + MIN_KEYCODE;
+-				pQueue->val = CAPS_KEY_DOWN; //Simulate press
+-
+-				pQueue = EvdevNextInQueue(pInfo);
+-				pQueue->type = EV_QUEUE_KEY;
+-				pQueue->detail.key = KEY_CAPSLOCK + MIN_KEYCODE;
+-				pQueue->val = CAPS_KEY_UP; //Simulate release
+-
+-				capsKey = OFF;
+-			}
+-		}
+-	}
++    if ((pQueue = EvdevNextInQueue(pInfo)))
++    {
++        pQueue->type = EV_QUEUE_KEY;
++        pQueue->detail.key = code;
++        pQueue->val = value;
++    }
+ }
+ 
+ void
