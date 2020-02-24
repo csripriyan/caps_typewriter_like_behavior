@@ -6,11 +6,12 @@ The objective of this blog is to demonstrate how to change the behavior of the c
 
 2. When Caps lock is pressed again, there will be no Change.
 
-3. When a Shift key, Caps is OFF.
+3. When either left or right Shift key, Caps is turned OFF.
+
+4. When any Shift key is pressed again, nothing happens. The Caps key remains OFF.
 
 Note: The Shift key's original functionality remains intact.
 
-*This has been tested on Debian 8 version.
 
 This solution involves modifying xserver's input driver. So you need to download the following package and compile it.
 
@@ -20,19 +21,19 @@ Download xserver-xorg-input-evdev_2.10.5.orig.tar.gz from http://old-releases.ub
 
 The following packages need to be installed to compile the code.
 
-apt install make
+$ sudo apt install make
 
-apt install build-essential
+$ sudo apt install build-essential
 
-apt install pkg-config
+$ sudo apt install pkg-config
 
-apt install libevdev-dev
+$ sudo apt install libevdev-dev
 
-apt install xserver-xorg-dev
+$ sudo apt install xserver-xorg-dev
 
-apt install libmtdev-dev
+$ sudo apt install libmtdev-dev
 
-apt install libudev-dev
+$ sudo apt install libudev-dev
 
 
 Now we are ready to compile the code. 
@@ -63,8 +64,6 @@ $ make
 
 Use this compiled driver to overwrite the original driver file. (Make a copy of the original evdev_drv.so, just in case!)
 
-cp -a ~/Downloads/xf86-input-evdev-2.10.5/src/.libs/evdev_drv.so /usr/lib/xorg/modules/input/evdev_drv.so
+$ sudo cp -a ~/Downloads/xf86-input-evdev-2.10.5/src/.libs/evdev_drv.so /usr/lib/xorg/modules/input/evdev_drv.so
 
-
-When the driver is overwritten the X is reloaded automatically and you should see the new changes taking place right-away.
-
+When the driver is overwritten the X is reloaded automatically and you should see the new changes taking place right-away. This has been tested on Debian 8 version.
