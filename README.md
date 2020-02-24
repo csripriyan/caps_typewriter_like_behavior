@@ -2,9 +2,12 @@
 
 The objective of this blog is to demonstrate how to change the behavior of the caps lock button to behave like typewriter's caps key. After doing the below modification the following behavior is expected.
 
-1, When Caps lock is pressed, Caps will be ON
+1. When Caps lock is pressed, Caps will be ON
+
 2. When Caps lock is pressed again, there will be no Change.
+
 3. When a Shift key, Caps is OFF.
+
 Note: The Shift key's original functionality remains intact.
 
 *This has been tested on Debian 8 version.
