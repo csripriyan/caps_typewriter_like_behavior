@@ -1,22 +1,19 @@
-#Bringing typewriter's CAPS behavior to Linux PC
+# Bringing typewriter's CAPS behavior to Linux PC
 
-The objective of this blog is to make the caps lock button behave like the typewriter's caps key. After doing the below modification the following behavior is expected.
+The objective of this blog is to demonstrate how to change the behavior of the caps lock button to behave like typewriter's caps key. After doing the below modification the following behavior is expected.
 
-Action                - Expected output
------------------------------------
-Press Caps lock       - Caps is ON
-Press Caps lock again - No Change. 
-Press a Shift key     - Caps is OFF.
+1, When Caps lock is pressed, Caps will be ON
+2. When Caps lock is pressed again, there will be no Change.
+3. When a Shift key, Caps is OFF.
+Note: The Shift key's original functionality remains intact.
 
-However note that the Shift key's original functionality remains intact.
-
-This has been tested on Debian 8 version.
+*This has been tested on Debian 8 version.
 
 This solution involves modifying xserver's input driver. So you need to download the following package and compile it.
 
 Download xserver-xorg-input-evdev_2.10.5.orig.tar.gz from http://old-releases.ubuntu.com/ubuntu/pool/universe/x/xserver-xorg-input-evdev/
 
-Prerequisites:
+## Prerequisites:
 
 The following packages need to be installed to compile the code.
 
