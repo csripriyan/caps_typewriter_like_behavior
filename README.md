@@ -36,7 +36,9 @@ $ sudo apt install libmtdev-dev
 $ sudo apt install libudev-dev
 
 
-Now we are ready to compile the code. Let's decompress, configure and apply the patch before compiling.
+## Let's compile the code:
+
+Let's decompress, configure and apply the patch before compiling.
 
 Assuming the code package is downloaded into the Downloads folder in the home directory, just change directory to ~/Downloads and extract,
 
